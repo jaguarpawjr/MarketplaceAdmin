@@ -1,6 +1,6 @@
 import * as Icons from 'lucide-react';
 import type { VerificationStatus, TicketStatus, TicketPriority, Badge } from '../types';
-import { BADGES } from '../data';
+import { BADGES } from '../constants';
 
 export function StatusChip({ status }: { status: VerificationStatus }) {
   const map: Record<VerificationStatus, { label: string; cls: string; dot: string }> = {

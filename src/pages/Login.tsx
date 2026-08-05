@@ -1,16 +1,26 @@
 import { useState } from 'react';
 import { Sprout, Mail, Lock, ArrowRight, ShieldCheck, Eye, EyeOff } from 'lucide-react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
-export function LoginPage({ onLogin }: { onLogin: () => void }) {
-  const [email, setEmail] = useState('amara@agrimarket.io');
-  const [password, setPassword] = useState('demo1234');
+export function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => onLogin(), 600);
+    setError('');
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      // App.tsx onAuthStateChanged will handle the redirect
+    } catch (err: any) {
+      setError(err.message || 'Invalid email or password.');
+      setLoading(false);
+    }
   };
 
   return (
@@ -20,7 +30,7 @@ export function LoginPage({ onLogin }: { onLogin: () => void }) {
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 20% 30%, white 1px, transparent 1px), radial-gradient(circle at 70% 60%, white 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
         <div className="relative">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center"><Sprout size={24} /></div>
+            <div className="flex items-center justify-center"><Sprout size={28} className="text-white" /></div>
             <div>
               <div className="font-display font-bold text-lg leading-none">AgriMarket</div>
               <div className="text-xs text-brand-200 tracking-wide uppercase mt-1">Admin Console</div>
@@ -47,7 +57,7 @@ export function LoginPage({ onLogin }: { onLogin: () => void }) {
       <div className="flex items-center justify-center p-6 sm:p-12 bg-ink-50">
         <div className="w-full max-w-sm">
           <div className="lg:hidden flex items-center gap-2.5 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center"><Sprout size={20} className="text-white" /></div>
+            <div className="flex items-center justify-center"><Sprout size={24} className="text-brand-600" /></div>
             <div><div className="font-display font-bold text-ink-900">AgriMarket</div><div className="text-[11px] text-ink-500 uppercase tracking-wide">Admin Console</div></div>
           </div>
 
@@ -55,6 +65,11 @@ export function LoginPage({ onLogin }: { onLogin: () => void }) {
           <p className="text-sm text-ink-500 mt-1">Enter your admin credentials to continue.</p>
 
           <form onSubmit={submit} className="mt-8 space-y-4">
+            {error && (
+              <div className="p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg">
+                {error}
+              </div>
+            )}
             <div>
               <label className="label">Email address</label>
               <div className="relative">
@@ -83,10 +98,6 @@ export function LoginPage({ onLogin }: { onLogin: () => void }) {
               {loading ? 'Signing in…' : <>Sign in <ArrowRight size={16} /></>}
             </button>
           </form>
-
-          <div className="mt-6 p-3.5 rounded-xl bg-brand-50 border border-brand-100 text-xs text-brand-800">
-            <strong>Demo access:</strong> credentials are pre-filled. Just click <em>Sign in</em> to explore the console.
-          </div>
         </div>
       </div>
     </div>

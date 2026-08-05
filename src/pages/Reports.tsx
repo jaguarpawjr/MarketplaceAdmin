@@ -42,7 +42,7 @@ export function ReportsPage() {
         {/* Farmer status breakdown */}
         <div className="card p-5">
           <div className="flex items-center gap-2 mb-5">
-            <div className="w-9 h-9 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center"><Users size={18} /></div>
+            <div className="flex items-center justify-center text-brand-600"><Users size={20} /></div>
             <h2 className="font-display font-bold text-ink-900">Farmer Status Breakdown</h2>
           </div>
           <div className="space-y-3">
@@ -63,7 +63,7 @@ export function ReportsPage() {
         {/* Ticket breakdown */}
         <div className="card p-5">
           <div className="flex items-center gap-2 mb-5">
-            <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center"><LifeBuoy size={18} /></div>
+            <div className="flex items-center justify-center text-blue-600"><LifeBuoy size={20} /></div>
             <h2 className="font-display font-bold text-ink-900">Support Ticket Status</h2>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -80,7 +80,7 @@ export function ReportsPage() {
       {/* Top farmers by sales */}
       <div className="card p-5 mb-6">
         <div className="flex items-center gap-2 mb-5">
-          <div className="w-9 h-9 rounded-lg bg-sand-100 text-sand-500 flex items-center justify-center"><TrendingUp size={18} /></div>
+          <div className="flex items-center justify-center text-sand-500"><TrendingUp size={20} /></div>
           <h2 className="font-display font-bold text-ink-900">Top Farmers by Sales Volume</h2>
         </div>
         <div className="space-y-3">
@@ -107,7 +107,7 @@ export function ReportsPage() {
       {/* Admin action summary */}
       <div className="card p-5">
         <div className="flex items-center gap-2 mb-5">
-          <div className="w-9 h-9 rounded-lg bg-ink-100 text-ink-600 flex items-center justify-center"><Activity size={18} /></div>
+          <div className="flex items-center justify-center text-ink-600"><Activity size={20} /></div>
           <h2 className="font-display font-bold text-ink-900">Admin Actions Summary</h2>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">

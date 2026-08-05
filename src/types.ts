@@ -80,8 +80,7 @@ export type UserType = 'farmer' | 'buyer';
 
 export interface TicketMessage {
   id: string;
-  author: string;
-  authorType: 'user' | 'admin';
+  sender: 'admin' | 'user';
   text: string;
   createdAt: string;
 }
@@ -90,7 +89,8 @@ export interface Ticket {
   id: string;
   ref: string;
   subject: string;
-  user: string;
+  userId: string;
+  userEmail?: string;
   userType: UserType;
   userAvatarColor: string;
   category: TicketCategory;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Settings, Shield, Bell, Users, Lock, Save, UserCog, Webhook, Database } from 'lucide-react';
-import { ADMINS } from '../data';
+import { ADMINS } from '../constants';
 import { PageHeader } from '../components/ui';
 import type { AdminRole } from '../types';
 
@@ -169,7 +169,7 @@ export function SettingsPage() {
                 ] as const).map(({ name, desc, connected }) => {
                   return (
                     <div key={name} className="p-4 rounded-xl border border-ink-200 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-ink-100 text-ink-600 flex items-center justify-center"><Database size={18} /></div>
+                      <div className="flex items-center justify-center text-ink-600"><Database size={20} /></div>
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-semibold text-ink-900">{name}</div>
                         <div className="text-xs text-ink-500">{desc}</div>

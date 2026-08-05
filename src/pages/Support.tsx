@@ -6,7 +6,7 @@ import {
 import { useData } from '../store';
 import { TicketStatusChip, PriorityChip } from '../components/chips';
 import { PageHeader, SearchInput, EmptyState } from '../components/ui';
-import { ADMINS } from '../data';
+import { ADMINS } from '../constants';
 import type { Ticket, TicketStatus, TicketPriority, TicketCategory, UserType } from '../types';
 
 const STATUS_FILTERS: { key: TicketStatus | 'all'; label: string }[] = [
@@ -50,7 +50,10 @@ export function SupportPage() {
       if (userTypeFilter !== 'all' && t.userType !== userTypeFilter) return false;
       if (query) {
         const q = query.toLowerCase();
-        return t.subject.toLowerCase().includes(q) || t.user.toLowerCase().includes(q) || t.ref.toLowerCase().includes(q);
+        return t.subject.toLowerCase().includes(q) || 
+               t.userId.toLowerCase().includes(q) || 
+               (t.userEmail && t.userEmail.toLowerCase().includes(q)) || 
+               t.ref.toLowerCase().includes(q);
       }
       return true;
     });
@@ -110,11 +113,11 @@ export function SupportPage() {
                     </div>
                     <div className="text-sm font-semibold text-ink-900 leading-snug mb-1">{t.subject}</div>
                     <div className="flex items-center gap-2 text-xs text-ink-500">
-                      <span className="flex items-center gap-1">
-                        {t.userType === 'farmer' ? <Store size={11} /> : <User size={11} />}
-                        {t.user}
+                      <span className="flex items-center gap-1 truncate max-w-[120px]">
+                        {t.userType === 'farmer' ? <Store size={11} className="shrink-0" /> : <User size={11} className="shrink-0" />}
+                        <span className="truncate">{t.userEmail || t.userId}</span>
                       </span>
-                      <span>· {timeAgo(t.updatedAt)} ago</span>
+                      <span className="shrink-0">· {timeAgo(t.updatedAt)} ago</span>
                     </div>
                     <div className="mt-2"><TicketStatusChip status={t.status} /></div>
                   </button>
@@ -165,7 +168,7 @@ function Conversation({ ticket }: { ticket: Ticket }) {
             <div className="flex items-center gap-2 mt-1.5 text-sm text-ink-500">
               <span className="flex items-center gap-1.5">
                 {ticket.userType === 'farmer' ? <Store size={13} /> : <User size={13} />}
-                {ticket.user}
+                {ticket.userEmail || ticket.userId}
               </span>
               <span>·</span>
               <span className="capitalize">{ticket.category}</span>
@@ -206,15 +209,15 @@ function Conversation({ ticket }: { ticket: Ticket }) {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-ink-50/50">
         {ticket.messages.map((m) => {
-          const isAdmin = m.authorType === 'admin';
+          const isAdmin = m.sender === 'admin';
           return (
             <div key={m.id} className={`flex gap-3 ${isAdmin ? 'flex-row-reverse' : ''}`}>
               <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold shrink-0 ${isAdmin ? 'bg-brand-600 text-white' : 'bg-ink-300 text-white'}`}>
-                {m.author.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+                {isAdmin ? 'AD' : 'US'}
               </div>
               <div className={`max-w-[75%] ${isAdmin ? 'items-end' : ''} flex flex-col`}>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-xs font-semibold text-ink-700">{m.author}</span>
+                  <span className="text-xs font-semibold text-ink-700">{isAdmin ? 'Support Admin' : (ticket.userEmail || ticket.userId)}</span>
                   {isAdmin && <span className="chip bg-brand-100 text-brand-700 text-[10px] !py-0.5">Admin</span>}
                   <span className="text-xs text-ink-400">{new Date(m.createdAt).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span>
                 </div>
@@ -228,7 +231,7 @@ function Conversation({ ticket }: { ticket: Ticket }) {
       </div>
 
       {/* Internal notes */}
-      {ticket.internalNotes.length > 0 && (
+      {ticket.internalNotes?.length > 0 && (
         <div className="px-5 py-3 bg-amber-50/60 border-t border-amber-200">
           <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-700 mb-1.5"><Lock size={12} /> Internal notes</div>
           <ul className="space-y-1">

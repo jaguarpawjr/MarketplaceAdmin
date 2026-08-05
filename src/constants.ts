@@ -1,0 +1,103 @@
+import type { AdminUser, Badge } from './types';
+
+export const CURRENT_ADMIN: AdminUser = {
+  id: 'a1',
+  name: 'Amara Okafor',
+  email: 'amara@agrimarket.io',
+  role: 'Super Admin',
+  avatarColor: 'bg-brand-600',
+  initials: 'AO',
+};
+
+export const ADMINS: AdminUser[] = [
+  CURRENT_ADMIN,
+  {
+    id: 'a2',
+    name: 'Daniel Mensah',
+    email: 'daniel@agrimarket.io',
+    role: 'Verification Officer',
+    avatarColor: 'bg-sand-500',
+    initials: 'DM',
+  },
+  {
+    id: 'a3',
+    name: 'Priya Nair',
+    email: 'priya@agrimarket.io',
+    role: 'Support Agent',
+    avatarColor: 'bg-ink-700',
+    initials: 'PN',
+  },
+];
+
+export const BADGES: Badge[] = [
+  {
+    id: 'verified',
+    name: 'Verified Farmer',
+    description: 'Identity and farm documents confirmed by AgriMarket admins.',
+    icon: 'BadgeCheck',
+    color: 'bg-brand-100 text-brand-700 border-brand-200',
+    criteria: 'ID verified, land document verified, at least 3 farm photos, no open disputes.',
+    farmersCount: 5,
+    expiresAfterDays: 365,
+  },
+  {
+    id: 'organic',
+    name: 'Organic Certified',
+    description: 'Holds a valid organic certification from a recognized body.',
+    icon: 'Leaf',
+    color: 'bg-emerald-100 text-emerald-700 border-emerald-200',
+    criteria: 'Active organic certification document on file, renewed within 24 months.',
+    farmersCount: 3,
+    expiresAfterDays: 730,
+  },
+  {
+    id: 'trusted',
+    name: 'Trusted Seller',
+    description: 'Consistent delivery and low dispute rate over 6+ months.',
+    icon: 'ShieldCheck',
+    color: 'bg-blue-100 text-blue-700 border-blue-200',
+    criteria: '≥20 completed sales, dispute rate <2%, average rating ≥4.5.',
+    farmersCount: 3,
+    expiresAfterDays: 180,
+  },
+  {
+    id: 'fast',
+    name: 'Fast Responder',
+    description: 'Responds to buyer messages within 4 hours on average.',
+    icon: 'Zap',
+    color: 'bg-amber-100 text-amber-700 border-amber-200',
+    criteria: 'Median first-response time under 4 hours over the last 30 days.',
+    farmersCount: 2,
+    expiresAfterDays: 90,
+  },
+  {
+    id: 'premium',
+    name: 'Premium Farmer',
+    description: 'Top-tier produce quality and packaging scores from buyers.',
+    icon: 'Crown',
+    color: 'bg-sand-100 text-sand-500 border-sand-200',
+    criteria: 'Quality rating ≥4.7 across 10+ rated orders.',
+    farmersCount: 4,
+    expiresAfterDays: 365,
+  },
+  {
+    id: 'local',
+    name: 'Local Producer',
+    description: 'Sells primarily within 150km of the farm location.',
+    icon: 'MapPin',
+    color: 'bg-rose-100 text-rose-700 border-rose-200',
+    criteria: '≥80% of orders shipped to buyers within 150km in the last 90 days.',
+    farmersCount: 2,
+    expiresAfterDays: 365,
+  },
+  {
+    id: 'quality',
+    name: 'High Quality Produce',
+    description: 'Meets AgriMarket grading standards for produce quality.',
+    icon: 'Award',
+    color: 'bg-purple-100 text-purple-700 border-purple-200',
+    criteria: 'Produce grading score ≥90% across 3 consecutive inspections.',
+    farmersCount: 1,
+    expiresAfterDays: 180,
+  },
+];

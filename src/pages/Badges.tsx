@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Award, Plus, Pencil, Trash2, Check, X, Calendar, Users as UsersIcon } from 'lucide-react';
 import { useData } from '../store';
-import { BADGES } from '../data';
+import { BADGES } from '../constants';
 import { BadgeChip, BadgeIcon } from '../components/chips';
 import { PageHeader, Modal } from '../components/ui';
 import type { Badge } from '../types';
@@ -26,8 +26,8 @@ export function BadgesPage() {
           return (
             <div key={badge.id} className="card card-hover p-5">
               <div className="flex items-start justify-between mb-3">
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center border ${badge.color}`}>
-                  <BadgeIcon badge={badge} size={22} />
+                <div className={`flex items-center justify-center ${badge.color.split(' ').find(c => c.startsWith('text-'))}`}>
+                  <BadgeIcon badge={badge} size={32} />
                 </div>
                 <div className="flex items-center gap-1">
                   <button onClick={() => setEditing(badge)} className="p-1.5 rounded-lg text-ink-400 hover:bg-ink-100 hover:text-ink-700 transition"><Pencil size={15} /></button>

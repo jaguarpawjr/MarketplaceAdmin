@@ -57,8 +57,8 @@ export function Avatar({ initials, color, size = 'md' }: { initials: string; col
 export function EmptyState({ icon: Icon, title, description, action }: { icon: any; title: string; description?: string; action?: React.ReactNode }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-      <div className="w-14 h-14 rounded-2xl bg-ink-100 flex items-center justify-center mb-4">
-        <Icon size={26} className="text-ink-400" />
+      <div className="flex items-center justify-center mb-4 text-ink-400">
+        <Icon size={36} />
       </div>
       <h3 className="font-display font-semibold text-ink-800">{title}</h3>
       {description && <p className="text-sm text-ink-500 mt-1 max-w-sm">{description}</p>}

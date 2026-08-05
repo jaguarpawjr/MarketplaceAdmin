@@ -25,19 +25,19 @@ export function OverviewPage({ onNavigate }: { onNavigate: (p: PageKey) => void 
   const resolvedTickets = tickets.filter((t) => t.status === 'resolved');
 
   const metrics = [
-    { label: 'Total Farmers', value: farmers.length, icon: Users, trend: '+12%', up: true, color: 'bg-brand-50 text-brand-600' },
-    { label: 'Pending Verifications', value: pending.length, icon: ClipboardCheck, trend: '+3', up: true, color: 'bg-amber-50 text-amber-600' },
-    { label: 'Approved Farmers', value: approved.length, icon: CheckCircle2, trend: '+2', up: true, color: 'bg-emerald-50 text-emerald-600' },
-    { label: 'Rejected', value: rejected.length, icon: XCircle, trend: '0', up: false, color: 'bg-red-50 text-red-600' },
-    { label: 'Active Sellers', value: activeSellers.length, icon: Store, trend: '+1', up: true, color: 'bg-blue-50 text-blue-600' },
-    { label: 'Open Tickets', value: openTickets.length, icon: LifeBuoy, trend: '+2', up: false, color: 'bg-rose-50 text-rose-600' },
-    { label: 'Resolved Tickets', value: resolvedTickets.length, icon: CheckCheck, trend: '+1', up: true, color: 'bg-emerald-50 text-emerald-600' },
-    { label: 'Avg. Response', value: '3.2h', icon: Clock, trend: '-0.4h', up: true, color: 'bg-sand-100 text-sand-500' },
+    { label: 'Total Farmers', value: farmers.length, icon: Users, trend: '+12%', up: true, color: 'text-brand-600' },
+    { label: 'Pending Verifications', value: pending.length, icon: ClipboardCheck, trend: '+3', up: true, color: 'text-amber-600' },
+    { label: 'Approved Farmers', value: approved.length, icon: CheckCircle2, trend: '+2', up: true, color: 'text-emerald-600' },
+    { label: 'Rejected', value: rejected.length, icon: XCircle, trend: '0', up: false, color: 'text-red-600' },
+    { label: 'Active Sellers', value: activeSellers.length, icon: Store, trend: '+1', up: true, color: 'text-blue-600' },
+    { label: 'Open Tickets', value: openTickets.length, icon: LifeBuoy, trend: '+2', up: false, color: 'text-rose-600' },
+    { label: 'Resolved Tickets', value: resolvedTickets.length, icon: CheckCheck, trend: '+1', up: true, color: 'text-emerald-600' },
+    { label: 'Avg. Response', value: '3.2h', icon: Clock, trend: '-0.4h', up: true, color: 'text-sand-500' },
   ];
 
   const urgent = [
     ...pending.slice(0, 3).map((f) => ({ type: 'verification', title: `${f.name} awaiting review`, sub: `${f.location} · ${f.farmType}`, action: 'verification' as PageKey, id: f.id })),
-    ...tickets.filter((t) => t.priority === 'urgent' || t.status === 'escalated').slice(0, 2).map((t) => ({ type: 'ticket', title: t.subject, sub: `${t.ref} · ${t.user}`, action: 'support' as PageKey, id: t.id })),
+    ...tickets.filter((t) => t.priority === 'urgent' || t.status === 'escalated').slice(0, 2).map((t) => ({ type: 'ticket', title: t.subject, sub: `${t.ref} · ${t.userEmail || t.userId}`, action: 'support' as PageKey, id: t.id })),
   ];
 
   return (
@@ -60,8 +60,8 @@ export function OverviewPage({ onNavigate }: { onNavigate: (p: PageKey) => void 
           return (
             <div key={m.label} className="card card-hover p-5">
               <div className="flex items-start justify-between">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${m.color}`}>
-                  <Icon size={20} />
+                <div className={`flex items-center justify-center ${m.color}`}>
+                  <Icon size={24} />
                 </div>
                 <span className={`chip text-[11px] ${m.up ? 'stat-trend-up' : 'stat-trend-down'}`}>
                   {m.up ? <TrendingUp size={11} /> : <TrendingDown size={11} />}
@@ -82,8 +82,8 @@ export function OverviewPage({ onNavigate }: { onNavigate: (p: PageKey) => void 
         <div className="lg:col-span-2 card p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
-                <AlertTriangle size={17} className="text-red-600" />
+              <div className="flex items-center justify-center">
+                <AlertTriangle size={20} className="text-red-600" />
               </div>
               <h2 className="font-display font-bold text-ink-900">Needs Attention</h2>
             </div>
@@ -167,7 +167,7 @@ export function OverviewPage({ onNavigate }: { onNavigate: (p: PageKey) => void 
               <div key={t.id} className="flex items-center justify-between gap-3 p-3 rounded-lg border border-ink-200 hover:border-ink-300 transition">
                 <div className="min-w-0">
                   <div className="text-sm font-semibold text-ink-900 truncate">{t.subject}</div>
-                  <div className="text-xs text-ink-500 truncate">{t.ref} · {t.user}</div>
+                  <div className="text-xs text-ink-500 truncate">{t.ref} · {t.userEmail || t.userId}</div>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   <PriorityChip priority={t.priority} />

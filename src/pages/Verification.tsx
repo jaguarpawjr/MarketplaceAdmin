@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   ClipboardCheck, Filter, MapPin, Phone, Mail, CalendarDays, ArrowLeft,
   CheckCircle2, XCircle, MessageSquarePlus, Ban, FileText, Image as ImageIcon,
@@ -18,11 +18,21 @@ const FILTERS: { key: VerificationStatus | 'all'; label: string }[] = [
   { key: 'incomplete', label: 'Incomplete' },
 ];
 
-export function VerificationPage() {
+export function VerificationPage({
+  initialSelectedId,
+  onClearSelectedFarmer,
+}: {
+  initialSelectedId?: string | null;
+  onClearSelectedFarmer?: () => void;
+}) {
   const { farmers } = useData();
   const [filter, setFilter] = useState<VerificationStatus | 'all'>('pending');
   const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSelectedId(initialSelectedId ?? null);
+  }, [initialSelectedId]);
 
   const filtered = useMemo(() => {
     return farmers.filter((f) => {
@@ -38,7 +48,7 @@ export function VerificationPage() {
   const selected = farmers.find((f) => f.id === selectedId) || null;
 
   if (selected) {
-    return <FarmerReview farmer={selected} onBack={() => setSelectedId(null)} />;
+    return <FarmerReview farmer={selected} onBack={() => { setSelectedId(null); onClearSelectedFarmer?.(); }} />;
   }
 
   const counts = (s: VerificationStatus | 'all') => (s === 'all' ? farmers.length : farmers.filter((f) => f.status === s).length);

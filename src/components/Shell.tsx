@@ -3,7 +3,7 @@ import {
   LayoutDashboard, ClipboardCheck, Users, Award, LifeBuoy, BarChart3, Settings,
   Sprout, Search, Bell, ChevronDown, Menu, X, LogOut, ShieldCheck,
 } from 'lucide-react';
-import { CURRENT_ADMIN } from '../data';
+import { CURRENT_ADMIN } from '../constants';
 
 export type PageKey = 'overview' | 'verification' | 'farmers' | 'badges' | 'support' | 'reports' | 'settings';
 
@@ -30,8 +30,8 @@ export function Shell({ page, onNavigate, children }: ShellProps) {
   const SidebarContent = (
     <div className="flex flex-col h-full">
       <div className="flex items-center gap-2.5 px-5 h-16 border-b border-ink-200">
-        <div className="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center shadow-sm">
-          <Sprout size={20} className="text-white" />
+        <div className="flex items-center justify-center">
+          <Sprout size={24} className="text-brand-600" />
         </div>
         <div>
           <div className="font-display font-bold text-ink-900 leading-none">AgriMarket</div>
