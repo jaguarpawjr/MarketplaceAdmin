@@ -54,6 +54,12 @@ Install dependencies:
 npm install
 ```
 
+Configure Firebase before starting the app. Copy `.env.example` to `.env.local` and
+fill in the web app configuration from the Firebase project used by AgriMarket. In
+Firebase Console, enable **Authentication → Sign-in method** for **Email/Password**,
+**Google**, and **Email link (passwordless)**. Add the local and production domains
+to **Authentication → Settings → Authorized domains**.
+
 Start the dev server (runs automatically in the Bolt environment):
 
 ```bash
@@ -72,8 +78,14 @@ Type-check the project:
 npm run typecheck
 ```
 
-## Demo Access
-The login screen is pre-filled with demo credentials — just click **Sign in** to explore the console.
+## Authentication
+Authentication is handled by Firebase Authentication. Create the first administrator in the
+Firebase console under **Authentication → Users → Add user**, then sign in with that account.
+The **Forgot?** link sends a password-reset email for an existing account.
+
+The repository does not contain a default password or a public sign-up flow. Do not add
+credentials to source control; use Firebase Authentication and rotate credentials through the
+Firebase console.
 
 ## Project Structure
 
